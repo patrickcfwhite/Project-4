@@ -1,0 +1,44 @@
+* {
+  user-select: none;
+}
+
+
+.stringcontainer {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.string {
+  display: flex;
+  flex-direction: row;
+}
+
+.fret{
+  height: 25px;
+  width: 50px;
+  border: solid 1px black;
+}
+
+.key {
+  background-color: salmon;
+}
+
+.p1 {
+  background-color: red;
+}
+
+// .p2 {
+//    background-color: blue;
+//  }
+
+// .p3 {
+//   color: green
+// }
+
+// .p4 {
+//   background-color: goldenrod
+// }
+
+// .p5 {
+//   color: purple
+// }
