@@ -3,12 +3,11 @@ import ReactDOM from 'react-dom'
 
 import './style.scss'
 import { String } from './String'
-import Choice from './Choice'
+
 
 const App = () => {
   return (
     <>
-    <Choice />
     <String />
     </>
   )

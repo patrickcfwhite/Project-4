@@ -2,15 +2,21 @@ import React from 'react'
 import lib from './lib'
 import MIDISounds from 'midi-sounds-react'
 
+import Choice from './Choice'
+import Positions from './Positions'
+
 export class String extends React.Component {
   constructor() {
     super()
     this.state = {
       strings: { 'E': 40, 'A': 45, 'D': 50, 'G': 55, 'B': 59, 'e': 64 },
       stringArray: [40, 45, 50, 55, 59, 64],
-      key: 'A',
-      scale: [],
-      homeNotes: []
+      key: null,
+      scaleNotes: [],
+      homeNotes: [],
+      scaleIntervals: [],
+      activePosition: 'p0',
+      previewPosition: 'p0'
     }
   }
 
@@ -48,25 +54,59 @@ export class String extends React.Component {
     return false
   }
 
-
-
   componentDidMount() {
     this.envelopes = []
-    const scale = lib.scaleGenerator(this.state.key, lib.majorScale)
-    const homeNotes = lib.homeNotesFinder(scale)
-    this.setState({ scale: scale, homeNotes: homeNotes })
+    this.midiSounds.setMasterVolume(0.8)
+    this.midiSounds.setEchoLevel(0.02)
+    
+    
   }
+
   generateString(string) {
-    return lib.keyChecker(this.state.key, this.state.scale, string, this.state.homeNotes, lib.majorScale)
+    return lib.keyChecker(this.state.key, this.state.scaleNotes, string, this.state.homeNotes, this.state.scaleIntervals, this.state.activePosition, this.state.previewPosition)
   }
+
+  handleChange(event) {
+    const { value } = event.target
+    const update = value.length <= 2 ? lib.noteNumbers2[value] : lib.scaleChoices[value]
+    console.log(update)
+    !update[3] ? this.setState({ key: update }) : this.setState({ scaleIntervals: update })
+  }
+
+  handleSubmit(event) {
+    console.log(this.state)
+    event.preventDefault()
+    const scaleNotes = lib.scaleGenerator(this.state.key, this.state.scaleIntervals)
+    const homeNotes = lib.homeNotesFinder(scaleNotes)
+    this.setState({ scaleNotes: scaleNotes, homeNotes: homeNotes })
+    this.render()
+  }
+
+  handlePosition(event) {
+    event.preventDefault()
+    const { value } = event.target
+    const eventType = event.type
+    console.log(eventType, value)
+    eventType !== 'click' ?  this.setState({ previewPosition: value }) : value !== this.state.activePosition ? this.setState({ activePosition: value }) : this.setState({ activePosition: 'p0' })
+  }
+
+  handleMouseLeave() {
+    this.setState({ previewPosition: 'p0' })
+  }
+
   render() {
     if (!this.state.homeNotes)
       return null
     //console.log(this.state)
-    return (<container className='stringcontainer'>
+    
+    return (
+      <>
+      <Choice  handleChange={(event) => this.handleChange(event)} handleSubmit={(event) => this.handleSubmit(event)}/>
+      <Positions handleMouseLeave={() => this.handleMouseLeave()} handlePosition={(event) => this.handlePosition(event)}/>
+    <container className='stringcontainer'>
       {this.state.stringArray.map(string => {
         const fretboardArray = this.generateString(string)
-        console.log('fretboardArray', fretboardArray)
+        //console.log('fretboardArray', fretboardArray)
         return <div key={string} className="string">
           {fretboardArray.map(fret => {
             //console.log(fret)
@@ -96,6 +136,7 @@ export class String extends React.Component {
         </div>
       })}
       <MIDISounds ref={(ref) => (this.midiSounds = ref)} appElementName="root" instruments={[274]} />
-    </container >)
+    </container >
+    </>)
   }
 }

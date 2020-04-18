@@ -10,7 +10,7 @@ const harMinor = [2, 1, 2, 2, 1, 3, 1]
 const melMinor = [2,1,2,2,2,2,1]
 
 function scaleGenerator(note, scale) {
-  const starting = noteNumbers2[note]
+  const starting = note
   //console.log(starting)
   const noteArray = [starting]
   // console.log(noteArray)
@@ -58,30 +58,32 @@ function fretCheck(note, fretNum, string, scaleNotes, scaleIntervals) {
 }
 
 function keyCheck(scale, fret) {
-  console.log(scale, fret)
+  // console.log(scale, fret)
   return (scale.some(x => x === (fret % 12)))
 }
 
 
-function positionChecker(fretboardArray, fretArray, notesArray, string, scaleNotes, scaleIntervals) {
+function positionChecker(fretboardArray, fretArray, notesArray, string, scaleNotes, scaleIntervals, statePositionActive, statePositionPreview) {
   for (const note of notesArray) {
     const fretNum = fretArray[1]
     if (fretCheck(note, fretNum, string, scaleNotes, scaleIntervals)) {
       const position = `p${notesArray.indexOf(note) + 1}`
+      const active = `p${notesArray.indexOf(note) + 1}a`
+      const preview = `p${notesArray.indexOf(note) + 1}p`
       const twoBefore = fretboardArray[fretboardArray.length - 4]
       //add class 'p${position}'
       //console.log(position)
-      // if (!twoBefore || (twoBefore.includes(position) && scaleIntervals.some(x => x === 3)) || !twoBefore.includes(position)) {
+      if (!twoBefore || (twoBefore.includes(position) && scaleIntervals.some(x => x === 3)) || !twoBefore.includes(position)) {
       //console.log(fretNum, twoBefore)
-      fretArray.push(position)
-    // }
+      statePositionActive === position ? fretArray.push(active) : statePositionPreview === position ? fretArray.push(preview) : preview
+    }
     }
   }
   return fretArray
 }
 
 
-function keyChecker(key, scaleNotes, string, notesArray, scaleIntervals) {
+function keyChecker(key, scaleNotes, string, notesArray, scaleIntervals, position, preview) {
   const fretboardArray = []
   for (let i = 0; i < 22; i++) {
     const fretArray = []
@@ -93,7 +95,7 @@ function keyChecker(key, scaleNotes, string, notesArray, scaleIntervals) {
       //add class 'key'
       fretArray.push('key')
       //console.log(`${i} is in the key of ${key}`)
-      positionChecker(fretboardArray, fretArray, notesArray, string, scaleNotes, scaleIntervals)
+      positionChecker(fretboardArray, fretArray, notesArray, string, scaleNotes, scaleIntervals, position, preview)
     }
     //console.log(fretArray)
     fretboardArray.push(fretArray)
