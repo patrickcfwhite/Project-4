@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import lib from './lib'
+import axios from 'axios'
 
 const Choice = ({ handleChange, handleSubmit }) => {
   const keyChoices = Object.keys(lib.noteNumbers2)
-  const scaleChoices = Object.keys(lib.scaleChoices)
+  const [scaleChoices, setScaleChoices] = useState([])
+
+  useEffect(() => {
+    axios.get('/api/fretbored/')
+      .then((res) => {
+        console.log(res)
+        setScaleChoices(res.data)
+      })
+  }, [])
+
+  // const scaleChoices = Object.keys(lib.scaleChoices)
+  if (!scaleChoices) return null
   return (
     <form>
       <select onChange={handleChange}>
@@ -14,9 +26,9 @@ const Choice = ({ handleChange, handleSubmit }) => {
         })}
       </select>
       <select onChange={handleChange}>
-        {scaleChoices.map(choice => {
+        {scaleChoices.map((choice, id) => {
           return (
-            <option key={choice} value={choice}>{choice}</option>
+            <option key={id} value={choice.name}>{choice.name}</option>
           )
         })}
       </select>

@@ -21,11 +21,11 @@ class PopulatedScaleSerializer(serializers.ModelSerializer):
       fields = ('id', 'name', 'intervals', 'modes')
 
 
-# class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
 
-#     class Meta:
-#         model = User
-#         fields = ('username', 'email', 'saved')
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'savedScales')
 
 class PopulatedUserSerializer(serializers.ModelSerializer):
     savedScales = PopulatedScaleSerializer(many=True)

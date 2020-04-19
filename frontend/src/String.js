@@ -1,6 +1,7 @@
 import React from 'react'
 import lib from './lib'
 import MIDISounds from 'midi-sounds-react'
+import axios from 'axios'
 
 import Choice from './Choice'
 import Positions from './Positions'
@@ -11,10 +12,10 @@ export class String extends React.Component {
     this.state = {
       strings: { 'E': 40, 'A': 45, 'D': 50, 'G': 55, 'B': 59, 'e': 64 },
       stringArray: [40, 45, 50, 55, 59, 64],
-      key: null,
+      key: 0,
       scaleNotes: [],
       homeNotes: [],
-      scaleIntervals: [],
+      scaleIntervals: [2,2,1,2,2,2],
       activePosition: 'p0',
       previewPosition: 'p0'
     }
@@ -68,6 +69,7 @@ export class String extends React.Component {
 
   handleChange(event) {
     const { value } = event.target
+    console.log(event.target.value)
     const update = value.length <= 2 ? lib.noteNumbers2[value] : lib.scaleChoices[value]
     console.log(update)
     !update[3] ? this.setState({ key: update }) : this.setState({ scaleIntervals: update })
@@ -76,6 +78,7 @@ export class String extends React.Component {
   handleSubmit(event) {
     console.log(this.state)
     event.preventDefault()
+    axios.get('')
     const scaleNotes = lib.scaleGenerator(this.state.key, this.state.scaleIntervals)
     const homeNotes = lib.homeNotesFinder(scaleNotes)
     this.setState({ scaleNotes: scaleNotes, homeNotes: homeNotes })

@@ -1,10 +1,11 @@
 from rest_framework.views import APIView
+from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_204_NO_CONTENT, HTTP_401_UNAUTHORIZED
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .models import Scale, User
-from .serializers import ScaleSerializer, PopulatedScaleSerializer, PopulatedUserSerializer
+from .serializers import ScaleSerializer, PopulatedScaleSerializer, UserSerializer, PopulatedUserSerializer
 # OwnerSerializer PopulatedOwnerSerializer
 # from django.contrib.auth import get_user_model
 # User = get_user_model()
@@ -13,7 +14,7 @@ from .serializers import ScaleSerializer, PopulatedScaleSerializer, PopulatedUse
 # Create your views here.
 class ListView(APIView):
 
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    # permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get(self, request):
         scales = Scale.objects.all()
@@ -40,10 +41,7 @@ class DetailView(APIView):
         return Response(serializer.data)
 
     def put(self, request, pk):
-        # request.data['owner'] = request.user.id
         scale = Scale.objects.get(pk=pk)
-        # if cat.owner.id != request.user.id:
-        #     return Response(status=HTTP_401_UNAUTHORIZED)
         updated_scale = ScaleSerializer(scale, data=request.data)
         if (updated_scale.is_valid()):
             updated_scale.save()
@@ -62,3 +60,31 @@ class UserListView(APIView):
         serializer = PopulatedUserSerializer(users, many=True)
 
         return Response(serializer.data)
+
+class UserDetailView(APIView):
+
+    def get(self, request, pk):
+        user = User.objects.get(pk=pk)
+        serializer = PopulatedUserSerializer(user)
+
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+
+        user = User.objects.get(pk=pk)
+        if user.id != request.user.id:
+            return Response(status=HTTP_401_UNAUTHORIZED)
+        if request.data.scale:
+            scale = ScaleSerializer(data=request.data.scale)
+            if not scale.is_valid():
+                return Response(scale.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
+        updated_user = UserSerializer(user, data=request.data)
+        if (updated_user.is_valid()):
+            updated_user.save()
+            return Response(updated_user.data)
+        return Response(updated_user.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
+    
+    def delete(self, request, pk):
+        user = User.objects.get(pk=pk)
+        user.delete()
+        return Response(status=HTTP_204_NO_CONTENT)

@@ -2,7 +2,7 @@ const noteNumbers = { 0: 'C', 1: ['C#', 'Db'], 2: 'D', 3: ['D#', 'Eb'], 4: 'E', 
 
 const noteNumbers2 = { 'C': 0, 'Dbb': 0, 'B#': 0, 'Db': 1, 'C#': 1, 'Bx': 1, 'D': 2, 'Ebb': 2, 'Cx': 2, 'Eb': 3, 'D#': 3, 'Fbb': 3, 'E': 4, 'Dx': 4, 'Fb': 4, 'F': 5, 'Gbb': 5, 'E#': 5, 'Gb': 6, 'F#': 6, 'Ex': 6, 'G': 7, 'Abb': 7, 'Fx': 7, 'Ab': 8, 'G#': 8, 'A': 9, 'Bbb': 9, 'Gx': 9, 'Bb': 10, 'A#': 10, 'Cbb': 10, 'B': 11, 'Ax': 11, 'Cb': 11 }
 
-const scaleChoices = { 'Natural Major': [2, 2, 1, 2, 2, 2, 1], 'Natural Minor': [2, 1, 2, 2, 1, 2, 2], 'Harmonic Minor': [2, 1, 2, 2, 1, 3, 1], 'Melodic Minor': [2,1,2,2,2,2,1] }
+const scaleChoices = { 'Natural Major': [2, 2, 1, 2, 2, 2, 1], 'Natural Minor': [2, 1, 2, 2, 1, 2, 2], 'Harmonic Minor': [2, 1, 2, 2, 1, 3, 1], 'Melodic Minor': [2,1,2,2,2,2,1], 'Minor Pentatonic': [3,2,2,3], 'Minor Blues': [3,2,1,1,3] }
 
 const majorScale = [2, 2, 1, 2, 2, 2, 1]
 const minorScale = [2, 1, 2, 2, 1, 2, 2]

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+    'frontend',
     'jwt_auth',
     'rest_framework',
     'fretbored'
