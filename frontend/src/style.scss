@@ -2,6 +2,20 @@
   user-select: none;
 }
 
+.canvas {
+  transition: .5s cubic-bezier(.91,.06,.47,1.05) transform;
+}
+
+.canvas .menu  {
+  position: absolute;
+  display: block;
+  width: 200px;
+  transform: translateX(-200px);
+}
+
+.canvas.show-menu   {
+  transform: translateX(200px);
+}
 
 .stringcontainer {
   display: flex;

@@ -5,10 +5,14 @@ import axios from 'axios'
 
 import Choice from './Choice'
 import Positions from './Positions'
+import Sidebar from './Sidebar'
+import 'bulma'
+
+
 
 export class String extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       strings: { 'E': 40, 'A': 45, 'D': 50, 'G': 55, 'B': 59, 'e': 64 },
       stringArray: [40, 45, 50, 55, 59, 64],
@@ -20,8 +24,14 @@ export class String extends React.Component {
       activePosition: 'p0',
       previewPosition: 'p0',
       intervalAndNote: null,
-      noteNotInterval: false
+      noteNotInterval: false,
+      menuOpen: false,
+      isLoggedIn: false
     }
+  }
+
+  toggleMenu() {
+    this.setState({ menuOpen: !this.state.menuOpen })
   }
 
   playTestInstrument(note) {
@@ -84,24 +94,24 @@ export class String extends React.Component {
     var guitar = 274
     var data = [
       [[], [[guitar, [40], 2 / 16, 1]]],
-      [[],[]],
+      [[], []],
       [[], [[guitar, [42], 2 / 16, 1]]],
-      [[],[]],
+      [[], []],
 
       [[], [[guitar, [44], 2 / 16, 1]]],
-      [[],[]],
+      [[], []],
       [[], [[guitar, [45], 2 / 16, 1]]],
-      [[],[]],
+      [[], []],
 
       [[], [[guitar, [47], 2 / 16, 1]]],
-      [[],[]],
+      [[], []],
       [[], [[guitar, [49], 2 / 16, 1]]],
-      [[],[]],
+      [[], []],
 
       [[], [[guitar, [51], 2 / 16, 1]]],
-      [[],[]],
+      [[], []],
       [[], [[guitar, [52], 2 / 16, 1]]],
-      [[],[]]
+      [[], []]
     ]
     this.midiSounds.startPlayLoop(data, 100, 1 / 16)
   }
@@ -162,44 +172,55 @@ export class String extends React.Component {
 
     return (
       <>
-        <button onClick={() => this.startPlay()}>start scale</button>
-        <button onClick={() => this.stopAll()}>stop scale</button>
-        <Choice handleChange={(event) => this.handleChange(event)} handleSubmit={(event) => this.handleSubmit(event)} />
-        <Positions handleMouseLeave={() => this.handleMouseLeave()} handlePosition={(event) => this.handlePosition(event)} toggleFretDisplay={(event) => this.toggleFretDisplay(event)} noteNotInterval={this.state.noteNotInterval} />
-        <container className='stringcontainer'>
-          {this.state.stringArray.map(string => {
-            const fretboardArray = this.generateString(string)
-            //console.log('fretboardArray', fretboardArray)
-            return <div key={string} className="string">
-              {fretboardArray.map(fret => {
-                //console.log(fret)
-                const value = fret.shift()
-                const fretNum = fret.shift()
-                const classes = fret.join(' ')
-                //console.log(value, fretNum, classes)
-                return classes ? <div
-                  key={value}
-                  value={value}
-                  className={`fret ${classes}`}
-                  onMouseDown={() => this.keyDown(value)}
-                  onMouseUp={() => this.keyUp(value)}
-                  onMouseOut={() => this.keyUp(value)}
-                // onClick={() => this.playTestInstrument(value)}
-                >{this.getFretInnerText(value, fretNum)}</div> :
-                  <div
+        <div className={!this.state.menuOpen ? 'canvas' : 'canvas show-menu'}>
+          <Sidebar isLoggedIn={this.state.isLoggedIn}/>
+          <button onClick={() => this.toggleMenu()}>Menu</button>
+          <button onClick={() => this.startPlay()}>start scale</button>
+          <button onClick={() => this.stopAll()}>stop scale</button>
+          <Choice handleChange={(event) => this.handleChange(event)} handleSubmit={(event) => this.handleSubmit(event)} />
+          <Positions handleMouseLeave={() => this.handleMouseLeave()} handlePosition={(event) => this.handlePosition(event)} toggleFretDisplay={(event) => this.toggleFretDisplay(event)} noteNotInterval={this.state.noteNotInterval} />
+          <container className='stringcontainer'>
+            {this.state.stringArray.map(string => {
+              const fretboardArray = this.generateString(string)
+              //console.log('fretboardArray', fretboardArray)
+              return <div key={string} className="string">
+                {fretboardArray.map(fret => {
+                  //console.log(fret)
+                  const value = fret.shift()
+                  const fretNum = fret.shift()
+                  const classes = fret.join(' ')
+                  //console.log(value, fretNum, classes)
+                  return classes ? <div
                     key={value}
                     value={value}
-                    className="fret"
+                    className={`fret ${classes}`}
                     onMouseDown={() => this.keyDown(value)}
                     onMouseUp={() => this.keyUp(value)}
                     onMouseOut={() => this.keyUp(value)}
                   // onClick={() => this.playTestInstrument(value)}
-                  >{this.getFretInnerText(value)}</div>
-              })}
+                  >{this.getFretInnerText(value, fretNum)}</div> :
+                    <div
+                      key={value}
+                      value={value}
+                      className="fret"
+                      onMouseDown={() => this.keyDown(value)}
+                      onMouseUp={() => this.keyUp(value)}
+                      onMouseOut={() => this.keyUp(value)}
+                    // onClick={() => this.playTestInstrument(value)}
+                    >{this.getFretInnerText(value)}</div>
+                })}
+              </div>
+            })}
+            <MIDISounds ref={(ref) => (this.midiSounds = ref)} appElementName="root" instruments={[274]} />
+          </container >
+          <div className="modal">
+            <div className="modal-background"></div>
+            <div className="modal-content">
             </div>
-          })}
-          <MIDISounds ref={(ref) => (this.midiSounds = ref)} appElementName="root" instruments={[274]} />
-        </container >
-      </>)
+            <button className="modal-close is-large" aria-label="close"></button>
+          </div>
+        </div>
+      </>
+    )
   }
 }
