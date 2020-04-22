@@ -18,14 +18,14 @@ const Choice = ({ handleChange, handleSubmit }) => {
   if (!scaleChoices) return null
   return (
     <form>
-      <select onChange={handleChange}>
+      <select className='select is-rounded' onChange={handleChange}>
         {keyChoices.map(choice => {
           return (
             <option key={choice} value={choice}>{choice}</option>
           )
         })}
       </select>
-      <select onChange={handleChange}>
+      <select className='select is-rounded' onChange={handleChange}>
         {scaleChoices.map((choice, id) => {
           return (
             <option key={id} value={choice.name}>{choice.name}</option>

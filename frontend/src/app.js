@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
+import 'bulma'
 import './style.scss'
 import { String } from './String'
-import 'bulma'
 
 
 const App = () => {

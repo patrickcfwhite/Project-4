@@ -6,7 +6,10 @@ import axios from 'axios'
 import Choice from './Choice'
 import Positions from './Positions'
 import Sidebar from './Sidebar'
+import ScaleMelody from './ScaleMelody'
+import Modal from './Modal'
 import 'bulma'
+import ScaleDisplay from './ScaleDisplay'
 
 
 
@@ -20,23 +23,32 @@ export class String extends React.Component {
       keyLetter: 'C',
       scaleNotes: [],
       homeNotes: [],
-      scaleIntervals: [2, 2, 1, 2, 2, 2],
+      scaleIntervals: [2, 2, 1, 2, 2, 2, 1],
       activePosition: 'p0',
       previewPosition: 'p0',
       intervalAndNote: null,
+      intervalPure: [],
       noteNotInterval: false,
       menuOpen: false,
-      isLoggedIn: false
+      isModalOpen: false,
+      modalLogin: true
     }
   }
 
-  toggleMenu() {
-    this.setState({ menuOpen: !this.state.menuOpen })
+  openMenu(event) {
+    event.preventDefault()
+    this.state.menuOpen === false ? this.setState({ menuOpen: true }) : null
+  }
+
+  closeMenu(event) {
+    event.preventDefault()
+    this.setState({ menuOpen: false })
   }
 
   playTestInstrument(note) {
     this.midiSounds.playChordNow(274, [note], 0.2)
   }
+
 
   keyDown(n, v) {
     this.keyUp(n)
@@ -50,6 +62,7 @@ export class String extends React.Component {
       , 0, n, 9999, volume)
     this.setState(this.state)
   }
+
   keyUp(n) {
     if (this.envelopes) {
       if (this.envelopes[n]) {
@@ -90,34 +103,6 @@ export class String extends React.Component {
     this.midiSounds.playChordAt(this.midiSounds.contextTime() + 0.5 * 5, 274, [48], 3)
   }
 
-  startPlay() {
-    var guitar = 274
-    var data = [
-      [[], [[guitar, [40], 2 / 16, 1]]],
-      [[], []],
-      [[], [[guitar, [42], 2 / 16, 1]]],
-      [[], []],
-
-      [[], [[guitar, [44], 2 / 16, 1]]],
-      [[], []],
-      [[], [[guitar, [45], 2 / 16, 1]]],
-      [[], []],
-
-      [[], [[guitar, [47], 2 / 16, 1]]],
-      [[], []],
-      [[], [[guitar, [49], 2 / 16, 1]]],
-      [[], []],
-
-      [[], [[guitar, [51], 2 / 16, 1]]],
-      [[], []],
-      [[], [[guitar, [52], 2 / 16, 1]]],
-      [[], []]
-    ]
-    this.midiSounds.startPlayLoop(data, 100, 1 / 16)
-  }
-  stopAll() {
-    this.midiSounds.stopPlayLoop()
-  }
 
   handleChange(event) {
     const { value } = event.target
@@ -128,13 +113,13 @@ export class String extends React.Component {
   }
 
   handleSubmit(event) {
-    console.log(this.state)
     event.preventDefault()
-    axios.get('')
+    // axios.get('')
     const scaleNotes = lib.scaleGenerator(this.state.key, this.state.scaleIntervals)
     const homeNotes = lib.homeNotesFinder(scaleNotes)
     const intvalandnote = lib.intervalAndNote(scaleNotes, this.state.keyLetter)
-    this.setState({ scaleNotes: scaleNotes, homeNotes: homeNotes, activePosition: 'p0', intervalAndNote: intvalandnote })
+    console.log('intvalnote', intvalandnote)
+    this.setState({ scaleNotes: scaleNotes, homeNotes: homeNotes, activePosition: 'p0', intervalAndNote: intvalandnote[0], intervalPure: intvalandnote[1] })
     this.render()
   }
 
@@ -155,6 +140,26 @@ export class String extends React.Component {
     this.setState({ previewPosition: 'p0' })
   }
 
+  openModal(event) {
+    event.preventDefault()
+    const { isModalOpen } = this.state
+    isModalOpen === true ? null : this.setState({ isModalOpen: !isModalOpen })
+  }
+
+  closeModal(event) {
+    event.preventDefault()
+    const { isModalOpen } = this.state
+    isModalOpen === false ? null : this.setState({ isModalOpen: !isModalOpen, modalLogin: true })
+  }
+
+  toggleModalType(event) {
+    event.preventDefault()
+    const { modalLogin } = this.state
+    const { value } = event.target
+    if (modalLogin.toString() === value) return
+    this.setState({ modalLogin: !modalLogin })
+  }
+
   getFretInnerText(value, fret) {
     if (!this.state.intervalAndNote) return fret
     const { intervalAndNote, scaleNotes, noteNotInterval } = this.state
@@ -168,18 +173,19 @@ export class String extends React.Component {
 
   render() {
     if (!this.state.homeNotes) return null
+    console.log('intervalpure', this.state.intervalPure, this.state.intervalAndNote)
     //console.log(this.state)
-
     return (
       <>
         <div className={!this.state.menuOpen ? 'canvas' : 'canvas show-menu'}>
-          <Sidebar isLoggedIn={this.state.isLoggedIn}/>
-          <button onClick={() => this.toggleMenu()}>Menu</button>
-          <button onClick={() => this.startPlay()}>start scale</button>
-          <button onClick={() => this.stopAll()}>stop scale</button>
+          <Modal closeModal={(event) => this.closeModal(event)} isModalOpen={this.state.isModalOpen} toggleModalType={event => this.toggleModalType(event)} modalLogin={this.state.modalLogin} />
+          <Sidebar closeMenu={(event) => this.closeMenu(event)} openModal={(event) => this.openModal(event)} isModalOpen={this.state.isModalOpen} menuOpen={this.state.menuOpen}/>
+          <button className='button' onClick={(event) => {{!this.menuOpen ? this.openMenu(event) : this.closeMenu(event)}}}>Menu</button>
+          <ScaleMelody scaleNotes={this.state.scaleNotes} midiSounds={this.midiSounds} />
           <Choice handleChange={(event) => this.handleChange(event)} handleSubmit={(event) => this.handleSubmit(event)} />
+          <ScaleDisplay intervalAndNote={this.state.intervalAndNote} intervalPure={this.state.intervalPure}/>
           <Positions handleMouseLeave={() => this.handleMouseLeave()} handlePosition={(event) => this.handlePosition(event)} toggleFretDisplay={(event) => this.toggleFretDisplay(event)} noteNotInterval={this.state.noteNotInterval} />
-          <container className='stringcontainer'>
+          <div className='container stringcontainer'>
             {this.state.stringArray.map(string => {
               const fretboardArray = this.generateString(string)
               //console.log('fretboardArray', fretboardArray)
@@ -192,6 +198,7 @@ export class String extends React.Component {
                   //console.log(value, fretNum, classes)
                   return classes ? <div
                     key={value}
+                    id={`f${fretNum}`}
                     value={value}
                     className={`fret ${classes}`}
                     onMouseDown={() => this.keyDown(value)}
@@ -201,6 +208,7 @@ export class String extends React.Component {
                   >{this.getFretInnerText(value, fretNum)}</div> :
                     <div
                       key={value}
+                      id={`f${fretNum}`}
                       value={value}
                       className="fret"
                       onMouseDown={() => this.keyDown(value)}
@@ -211,14 +219,8 @@ export class String extends React.Component {
                 })}
               </div>
             })}
+          </div >
             <MIDISounds ref={(ref) => (this.midiSounds = ref)} appElementName="root" instruments={[274]} />
-          </container >
-          <div className="modal">
-            <div className="modal-background"></div>
-            <div className="modal-content">
-            </div>
-            <button className="modal-close is-large" aria-label="close"></button>
-          </div>
         </div>
       </>
     )

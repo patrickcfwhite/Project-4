@@ -4,17 +4,18 @@
 
 .canvas {
   transition: .5s cubic-bezier(.91,.06,.47,1.05) transform;
+  height: 100vh;
 }
 
 .canvas .menu  {
   position: absolute;
   display: block;
-  width: 200px;
-  transform: translateX(-200px);
+  width: 20vh;
+  transform: translateX(-20vh);
 }
 
 .canvas.show-menu   {
-  transform: translateX(200px);
+  transform: translateX(20vh);
 }
 
 .stringcontainer {
@@ -28,13 +29,23 @@
 }
 
 .fret{
-  height: 25px;
+  height: 40px;
   width: 50px;
-  border: solid 1px black;
+  border: solid 4px silver;
 }
 
 .key {
   background-color: salmon;
+}
+
+.intcontainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.intbox {
+  border: solid 1px black;
+  width: 30px;
 }
 
 .p1a, .p2a, .p3a, .p4a, .p5a, .p6a, .p7a {
@@ -56,3 +67,96 @@
 // .p5 {
 //   color: purple
 // }
+
+
+// fret ids
+$scale-width: 200vw;
+
+#f1 {
+  width: ($scale-width * 0.052975);
+}
+
+#f2 {
+  width: ($scale-width * 0.050003);
+}
+
+#f3 {
+  width: ($scale-width * 0.047187);
+}
+
+#f4 {
+  width: ($scale-width * 0.044556);
+}
+
+#f5 {
+  width: ($scale-width * 0.042046);
+}
+
+#f6 {
+  width: ($scale-width * 0.039687);
+}
+
+#f7 {
+  width: ($scale-width * 0.037459);
+}
+
+#f8 {
+  width: ($scale-width * 0.035357);
+}
+
+#f9 {
+  width: ($scale-width * 0.033373);
+}
+
+#f10 {
+  width: ($scale-width * 0.031499);
+}
+
+#f11 {
+  width: ($scale-width * 0.029732);
+}
+
+#f12 {
+  width: ($scale-width * 0.028063);
+}
+
+#f13 {
+  width: ($scale-width * 0.026488);
+}
+
+#f14 {
+  width: ($scale-width * 0.025001);
+}
+
+#f15 {
+  width: ($scale-width * 0.023598);
+}
+
+#f16 {
+  width: ($scale-width * 0.022273);
+}
+
+#f17 {
+  width: ($scale-width * 0.021024);
+}
+
+#f18 {
+  width: ($scale-width * 0.019843);
+}
+
+#f19 {
+  width: ($scale-width * 0.01873);
+}
+
+#f20 {
+  width: ($scale-width * 0.017678);
+}
+
+#f21 {
+  width: ($scale-width * 0.016687);
+}
+
+.modal-background {
+  height: 100vh;
+  width: 100vw;
+}
