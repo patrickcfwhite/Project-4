@@ -198,6 +198,7 @@ function intervalAndNote(scale, key) {
       case 7:
         int = 'P5'
         adjScale[i] - adjScale[i - 1] === 1 && adjScale.length <= 7 ? counter -= 1 : counter
+        if (adjScale.length < 7 && adjScale[i] - adjScale[i - 1] === 3) counter += 1
         break
       case 8:
         if (adjScale[i] - adjScale[i - 1] < 3) {

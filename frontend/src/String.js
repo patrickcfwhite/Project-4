@@ -10,6 +10,10 @@ import ScaleMelody from './ScaleMelody'
 import Modal from './Modal'
 import 'bulma'
 import ScaleDisplay from './ScaleDisplay'
+import Notes from './RenderStave'
+
+import Vex from 'vexflow'
+import auth from './auth'
 
 
 
@@ -24,6 +28,7 @@ export class String extends React.Component {
       scaleNotes: [],
       homeNotes: [],
       scaleIntervals: [2, 2, 1, 2, 2, 2, 1],
+      scoreNotes: [],
       activePosition: 'p0',
       previewPosition: 'p0',
       intervalAndNote: null,
@@ -31,7 +36,9 @@ export class String extends React.Component {
       noteNotInterval: false,
       menuOpen: false,
       isModalOpen: false,
-      modalLogin: true
+      modalLogin: true,
+      user: {},
+      scale: {}
     }
   }
 
@@ -85,8 +92,23 @@ export class String extends React.Component {
     this.envelopes = []
     this.midiSounds.setMasterVolume(0.8)
     this.midiSounds.setEchoLevel(0.02)
+    if (auth.isLoggedIn()) {
+      const user = auth.getUserId()
+      console.log('user', user)
+      axios.get(`/api/fretbored/users/${user}`)
+        .then(res => {
+          console.log(res)
+          this.setState({ user: res.data })
+        })
+    }
+  }
 
-
+  saveScale() {
+    const { scale, activePosition } = this.state
+    const toSave = { scale: scale, position: Number(activePosition[1]) }
+    const user = auth.getUserId()
+    axios.post('/api/fretbored/saved_scales/', toSave)
+      .then(res => console.log(res.data))
   }
 
   generateString(string) {
@@ -105,9 +127,8 @@ export class String extends React.Component {
 
 
   handleChange(event) {
-    const { value } = event.target
-    console.log(event.target.value)
-    const update = value.length <= 2 ? lib.noteNumbers2[value] : lib.scaleChoices[value]
+    const { value, data } = event.target
+    const update = value.length <= 2 ? lib.noteNumbers2[value] : value.split(',').map(x => Number(x))
     console.log(update)
     !update[3] ? this.setState({ key: update, keyLetter: event.target.value }) : this.setState({ scaleIntervals: update })
   }
@@ -118,8 +139,9 @@ export class String extends React.Component {
     const scaleNotes = lib.scaleGenerator(this.state.key, this.state.scaleIntervals)
     const homeNotes = lib.homeNotesFinder(scaleNotes)
     const intvalandnote = lib.intervalAndNote(scaleNotes, this.state.keyLetter)
+    const noteLetters = intvalandnote[0].map(x => x[1])
     console.log('intvalnote', intvalandnote)
-    this.setState({ scaleNotes: scaleNotes, homeNotes: homeNotes, activePosition: 'p0', intervalAndNote: intvalandnote[0], intervalPure: intvalandnote[1] })
+    this.setState({ scaleNotes: scaleNotes, homeNotes: homeNotes, activePosition: 'p0', intervalAndNote: intvalandnote[0], intervalPure: intvalandnote[1], scoreNotes: noteLetters })
     this.render()
   }
 
@@ -173,54 +195,75 @@ export class String extends React.Component {
 
   render() {
     if (!this.state.homeNotes) return null
-    console.log('intervalpure', this.state.intervalPure, this.state.intervalAndNote)
+    console.log(this.state)
     //console.log(this.state)
+
     return (
       <>
         <div className={!this.state.menuOpen ? 'canvas' : 'canvas show-menu'}>
+
           <Modal closeModal={(event) => this.closeModal(event)} isModalOpen={this.state.isModalOpen} toggleModalType={event => this.toggleModalType(event)} modalLogin={this.state.modalLogin} />
-          <Sidebar closeMenu={(event) => this.closeMenu(event)} openModal={(event) => this.openModal(event)} isModalOpen={this.state.isModalOpen} menuOpen={this.state.menuOpen}/>
-          <button className='button' onClick={(event) => {{!this.menuOpen ? this.openMenu(event) : this.closeMenu(event)}}}>Menu</button>
-          <ScaleMelody scaleNotes={this.state.scaleNotes} midiSounds={this.midiSounds} />
-          <Choice handleChange={(event) => this.handleChange(event)} handleSubmit={(event) => this.handleSubmit(event)} />
-          <ScaleDisplay intervalAndNote={this.state.intervalAndNote} intervalPure={this.state.intervalPure}/>
-          <Positions handleMouseLeave={() => this.handleMouseLeave()} handlePosition={(event) => this.handlePosition(event)} toggleFretDisplay={(event) => this.toggleFretDisplay(event)} noteNotInterval={this.state.noteNotInterval} />
-          <div className='container stringcontainer'>
-            {this.state.stringArray.map(string => {
-              const fretboardArray = this.generateString(string)
-              //console.log('fretboardArray', fretboardArray)
-              return <div key={string} className="string">
-                {fretboardArray.map(fret => {
-                  //console.log(fret)
-                  const value = fret.shift()
-                  const fretNum = fret.shift()
-                  const classes = fret.join(' ')
-                  //console.log(value, fretNum, classes)
-                  return classes ? <div
-                    key={value}
-                    id={`f${fretNum}`}
-                    value={value}
-                    className={`fret ${classes}`}
-                    onMouseDown={() => this.keyDown(value)}
-                    onMouseUp={() => this.keyUp(value)}
-                    onMouseOut={() => this.keyUp(value)}
-                  // onClick={() => this.playTestInstrument(value)}
-                  >{this.getFretInnerText(value, fretNum)}</div> :
-                    <div
+          <Sidebar closeMenu={(event) => this.closeMenu(event)} openModal={(event) => this.openModal(event)} isModalOpen={this.state.isModalOpen} menuOpen={this.state.menuOpen} />
+          <button className='button' onClick={(event) => {
+            { !this.menuOpen ? this.openMenu(event) : this.closeMenu(event) } 
+          }}>Menu</button>
+          <div className="container main-container">
+            <section className="hero">
+              <div className="hero-body">
+                <div className="container">
+                  <h1 className="title">
+                    Fretbored
+                  </h1>
+                </div>
+              </div>
+            </section>
+            <div className="container choice-container">
+              <Choice handleChange={(event) => this.handleChange(event)} handleSubmit={(event) => this.handleSubmit(event)} />
+            </div>
+            <Positions handleMouseLeave={() => this.handleMouseLeave()} handlePosition={(event) => this.handlePosition(event)} activePosition={this.state.activePosition} toggleFretDisplay={(event) => this.toggleFretDisplay(event)} noteNotInterval={this.state.noteNotInterval} />
+            <div id='vf'></div>
+            <div className='container stringcontainer'>
+              {this.state.stringArray.map(string => {
+                const fretboardArray = this.generateString(string)
+                //console.log('fretboardArray', fretboardArray)
+                return <div key={string} className="string">
+                  {fretboardArray.map(fret => {
+                    //console.log(fret)
+                    const value = fret.shift()
+                    const fretNum = fret.shift()
+                    const classes = fret.join(' ')
+                    //console.log(value, fretNum, classes)
+                    return classes ? <div
                       key={value}
                       id={`f${fretNum}`}
                       value={value}
-                      className="fret"
+                      className={`fret ${classes}`}
                       onMouseDown={() => this.keyDown(value)}
                       onMouseUp={() => this.keyUp(value)}
                       onMouseOut={() => this.keyUp(value)}
                     // onClick={() => this.playTestInstrument(value)}
-                    >{this.getFretInnerText(value)}</div>
-                })}
-              </div>
-            })}
-          </div >
-            <MIDISounds ref={(ref) => (this.midiSounds = ref)} appElementName="root" instruments={[274]} />
+                    >{this.getFretInnerText(value, fretNum)}</div> :
+                      <div
+                        key={value}
+                        id={`f${fretNum}`}
+                        value={value}
+                        className="fret"
+                        onMouseDown={() => this.keyDown(value)}
+                        onMouseUp={() => this.keyUp(value)}
+                        onMouseOut={() => this.keyUp(value)}
+                      // onClick={() => this.playTestInstrument(value)}
+                      >{this.getFretInnerText(value)}</div>
+                  })}
+                </div>
+              })}
+            </div >
+          </div>
+          <ScaleMelody scaleNotes={this.state.scaleNotes} midiSounds={this.midiSounds} />
+          <div className="container display-container">
+            <Notes noteLetters={this.state.scoreNotes} />
+            {/* <ScaleDisplay intervalAndNote={this.state.intervalAndNote} intervalPure={this.state.intervalPure} /> */}
+          </div>
+          <MIDISounds style={'height: 2px, width: 10px'} ref={(ref) => (this.midiSounds = ref)} appElementName="root" instruments={[274]} />
         </div>
       </>
     )

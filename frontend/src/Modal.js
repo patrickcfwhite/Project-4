@@ -39,9 +39,11 @@ const Modal = ({ closeModal, isModalOpen, toggleModalType, modalLogin }) => {
           <OutsideClickHandler onOutsideClick={(event) => {
             closeModal(event)
           }}>
-            <button value={true} onClick={toggleModalType}>Login</button>
-            <button value={false} onClick={toggleModalType}>Register</button>
-            <button onClick={closeModal}>Close</button>
+            <div className='field is-grouped'>
+            <button className='button' value={true} onClick={toggleModalType}>Login</button>
+            <button className='button'value={false} onClick={toggleModalType}>Register</button>
+            <button className='button' onClick={closeModal}>Close</button>
+            </div>
             {modalLogin ?
               <>
                 <h2>Login</h2>

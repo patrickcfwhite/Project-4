@@ -2,9 +2,12 @@
   user-select: none;
 }
 
+
+
 .canvas {
   transition: .5s cubic-bezier(.91,.06,.47,1.05) transform;
   height: 100vh;
+  padding: 20px 50px;
 }
 
 .canvas .menu  {
@@ -18,21 +21,71 @@
   transform: translateX(20vh);
 }
 
+.MIDISounds div {
+  height: 10px;
+  width: 10px
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.choice-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 20px 0 60px;
+}
+
+.select-scale {
+  background-color: rgb(111,145,124);
+  color: white
+}
+
+.position-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding-bottom: 10px;
+}
+
 .stringcontainer {
   display: flex;
   flex-direction: column-reverse;
+  // padding: 20px;
+  background-image: url('./images/neckimage2.png');
+  background-size: 106%;
+  background-position-x: -28px;
+  background-repeat: no-repeat;
 }
+
+.display-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.display-container {
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+}
+
+.scale-form {
+  display: flex;
+  flex-direction: column;
+}
+
 
 .string {
   display: flex;
   flex-direction: row;
 }
 
-.fret{
-  height: 40px;
-  width: 50px;
-  border: solid 4px silver;
-}
+
 
 .key {
   background-color: salmon;
@@ -41,11 +94,34 @@
 .intcontainer {
   display: flex;
   flex-direction: row;
+  width: 500px;
+  justify-content: center;
+  align-items: center;
 }
 
 .intbox {
   border: solid 1px black;
+  height: 30px;
   width: 30px;
+}
+
+// .button:active {
+//   background-color: black;
+//   color: white;
+// }
+
+// .button {
+//   background-color: blue;
+//   color: white;
+// }
+
+.button-position-active, .button-position-active:focus, .button-position-active:active {
+  background-color: green;
+  color: white;
+}
+
+.button-position-active:focus {
+  color: white;
 }
 
 .p1a, .p2a, .p3a, .p4a, .p5a, .p6a, .p7a {
@@ -67,96 +143,114 @@
 // .p5 {
 //   color: purple
 // }
+$scale-width: 3.779527559px;
+
+.fret{
+  height: 40px;
+  width: $scale-width * 5.5;
+  border: solid 1px silver;
+}
 
 
 // fret ids
-$scale-width: 200vw;
+
 
 #f1 {
-  width: ($scale-width * 0.052975);
+  width: ($scale-width * 36.482);
 }
 
 #f2 {
-  width: ($scale-width * 0.050003);
+  width: ($scale-width * 34.434);
 }
 
 #f3 {
-  width: ($scale-width * 0.047187);
+  width: ($scale-width * 32.502);
 }
 
 #f4 {
-  width: ($scale-width * 0.044556);
+  width: ($scale-width * 30.678);
 }
 
 #f5 {
-  width: ($scale-width * 0.042046);
+  width: ($scale-width * 28.956);
 }
 
 #f6 {
-  width: ($scale-width * 0.039687);
+  width: ($scale-width * 27.331);
 }
 
 #f7 {
-  width: ($scale-width * 0.037459);
+  width: ($scale-width * 25.797);
 }
 
 #f8 {
-  width: ($scale-width * 0.035357);
+  width: ($scale-width * 24.349);
 }
 
 #f9 {
-  width: ($scale-width * 0.033373);
+  width: ($scale-width * 22.982);
 }
 
 #f10 {
-  width: ($scale-width * 0.031499);
+  width: ($scale-width * 21.692);
 }
 
 #f11 {
-  width: ($scale-width * 0.029732);
+  width: ($scale-width * 20.475);
 }
 
 #f12 {
-  width: ($scale-width * 0.028063);
+  width: ($scale-width * 19.326);
 }
 
 #f13 {
-  width: ($scale-width * 0.026488);
+  width: ($scale-width * 18.241);
 }
 
 #f14 {
-  width: ($scale-width * 0.025001);
+  width: ($scale-width * 17.217);
 }
 
 #f15 {
-  width: ($scale-width * 0.023598);
+  width: ($scale-width * 16.251);
 }
 
 #f16 {
-  width: ($scale-width * 0.022273);
+  width: ($scale-width * 15.339);
 }
 
 #f17 {
-  width: ($scale-width * 0.021024);
+  width: ($scale-width * 14.478);
 }
 
 #f18 {
-  width: ($scale-width * 0.019843);
+  width: ($scale-width * 13.665);
 }
 
 #f19 {
-  width: ($scale-width * 0.01873);
+  width: ($scale-width * 12.898);
 }
 
 #f20 {
-  width: ($scale-width * 0.017678);
+  width: ($scale-width * 12.174);
 }
 
 #f21 {
-  width: ($scale-width * 0.016687);
+  width: ($scale-width * 11.491);
 }
 
 .modal-background {
   height: 100vh;
   width: 100vw;
 }
+
+select {
+  margin: 0px 5px
+}
+
+button {
+  margin: 0px 5px;
+}
+// svg {
+//   height: 500px;
+// }

@@ -3,16 +3,58 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_204_NO_CONTENT, HTTP_401_UNAUTHORIZED
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from django.contrib.auth import get_user_model
 
-from .models import Scale, User
-from .serializers import ScaleSerializer, PopulatedScaleSerializer, UserSerializer, PopulatedUserSerializer
+from .models import Scale, Category, SavedScale
+from .serializers import ScaleSerializer, PopulatedScaleSerializer, UserSerializer, PopulatedUserSerializer, CategorySerializer, PopulatedCategorySerializer, SavedScaleSerializer
 # OwnerSerializer PopulatedOwnerSerializer
 # from django.contrib.auth import get_user_model
-# User = get_user_model()
+User = get_user_model()
+
+
+class CategoryListView(APIView):
+
+    def get(self, request):
+        categories = Category.objects.all()
+        serializer = PopulatedCategorySerializer(categories, many=True)
+
+        return Response(serializer.data)
+
+    def post(self, request):
+        # request.data['owner'] = request.user.id
+        category = CategorySerializer(data=request.data)
+        if category.is_valid():
+            category.save()
+            return Response(category.data, status=HTTP_201_CREATED)
+        return Response(category.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
+
+
+class CategoryDetailView(APIView):
+
+    # permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    def get(self, request, pk):
+        category = Category.objects.get(pk=pk)
+        serializer = PopulatedCategorySerializer(category)
+
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        category = Category.objects.get(pk=pk)
+        updated_category = CategorySerializer(category, data=request.data)
+        if (updated_category.is_valid()):
+            updated_category.save()
+            return Response(updated_category.data)
+        return Response(updated_category.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
+
+    def delete(self, request, pk):
+        category = Category.objects.get(pk=pk)
+        category.delete()
+        return Response(status=HTTP_204_NO_CONTENT)
 
 
 # Create your views here.
-class ListView(APIView):
+class ScaleListView(APIView):
 
     # permission_classes = (IsAuthenticatedOrReadOnly,)
 
@@ -30,7 +72,8 @@ class ListView(APIView):
             return Response(scale.data, status=HTTP_201_CREATED)
         return Response(scale.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
 
-class DetailView(APIView):
+
+class ScaleDetailView(APIView):
 
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
@@ -53,6 +96,17 @@ class DetailView(APIView):
         scale.delete()
         return Response(status=HTTP_204_NO_CONTENT)
 
+
+class SavedScaleListView(APIView):
+
+    def post(self, request, data):
+        savedScale = SavedScaleSerializer(data=data)
+        if savedScale.is_valid():
+            savedScale.save()
+            return Response(savedScale.data, status=HTTP_201_CREATED)
+        return Response(savedScale.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
+
+
 class UserListView(APIView):
 
     def get(self, request):
@@ -68,6 +122,7 @@ class UserListView(APIView):
     #         return Response(user.data, status=HTTP_201_CREATED)
     #     return Response(user.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
 
+
 class UserDetailView(APIView):
 
     def get(self, request, pk):
@@ -81,16 +136,16 @@ class UserDetailView(APIView):
         user = User.objects.get(pk=pk)
         if user.id != request.user.id:
             return Response(status=HTTP_401_UNAUTHORIZED)
-        if request.data.scale:
-            scale = ScaleSerializer(data=request.data.scale)
-            if not scale.is_valid():
-                return Response(scale.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
+        # if request.data.scale:
+        #     scale = ScaleSerializer(data=request.data.scale)
+        #     if not scale.is_valid():
+        #         return Response(scale.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
         updated_user = UserSerializer(user, data=request.data)
         if (updated_user.is_valid()):
             updated_user.save()
             return Response(updated_user.data)
         return Response(updated_user.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
-    
+
     def delete(self, request, pk):
         user = User.objects.get(pk=pk)
         user.delete()
