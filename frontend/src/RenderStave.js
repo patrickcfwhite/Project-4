@@ -7,13 +7,19 @@ const { Stave, Renderer, Formatter, StaveNote, Accidental } = Vex.Flow
 const Notes = ({ noteLetters }) => {
   
   function noteBuilder(notes) {
+    const noteOrder = ['C' ,'D', 'E', 'F', 'G', 'A', 'B']
     const usenotes = [...notes]
     usenotes.length < 8 ? usenotes.push(usenotes[0]) : usenotes
     console.log('usenotes', usenotes)
     let octave = 4
     let prevNote
+    const firstNote = noteOrder.indexOf(notes[0][0])
     const notesmap = usenotes.map((note, i) => {
-      if (note[0] === 'C' && i !== 0 && note[0] !== prevNote[0]) {
+      // if (note[0] === 'C' && i !== 0 && note[0] !== prevNote[0] && octave !== 5) {
+      if (noteOrder.indexOf(note[0]) < firstNote && octave !== 5) {  
+        octave += 1
+      }
+      if (note[0] === 'C' && i === usenotes.length - 1) {
         octave += 1
       }
       const accidentCheck = i !== 0 ? (prevNote[0] === note[0]) : false
@@ -74,17 +80,17 @@ const Notes = ({ noteLetters }) => {
     svg.style.top = -bb.y + half + Math.max(0, (100 - bb.h) * 2 / 3) + 'px'
     svg.style.height = Math.max(100, bb.h)
     svg.style.left = '0px'
-    svg.style.width = 800 + 'px'
+    svg.style.width = 400 + 'px'
     svg.style.position = 'absolute'
     svg.style.overflow = 'visible'
     svgContainer.style.height = Math.max(100, bb.h + padding) + 'px'
-    svgContainer.style.width = 500 + 'px'
+    svgContainer.style.width = 400 + 'px'
     svgContainer.style.position = 'relative'
     svgContainer.style.display = 'inlineBlock'
 
     const svgSerializer = new XMLSerializer()
     const svgOutput = svgSerializer.serializeToString(svgContainer)
-    return <div>{ReactHTMLParser(svgOutput)}</div>
+    return <div className="svg-div">{ReactHTMLParser(svgOutput)}</div>
 
   } else {
     return null

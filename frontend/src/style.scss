@@ -2,26 +2,74 @@
   user-select: none;
 }
 
+.hero {
+  text-align: left;
+  border-bottom: 5px black solid;
+  border-image: linear-gradient(to right, #000 5%, rgba(0,0,0,0) 25%); /* to top - at 50% transparent */
+  border-image-slice: 1;
+  margin-bottom: 20px;
+}
 
+.hero-body {
+  padding-left: 0px;
+  padding-bottom: 25px;
+}
 
 .canvas {
   transition: .5s cubic-bezier(.91,.06,.47,1.05) transform;
   height: 100vh;
-  padding: 20px 50px;
 }
 
 .canvas .menu  {
   position: absolute;
   display: block;
-  width: 20vh;
-  transform: translateX(-20vh);
+  width: 40vh;
+  transform: translateX(-40vh);
+  padding: 80px 50px;
+  
+}
+
+.menu-label {
+  padding-left: 5px;
+  flex: 1;
+  margin: 10px;
+  font: 10px;
+}
+
+.menu div {
+  font-size: 1em;
+  border-top: 3px black solid;
+  border-left: 3px black solid;
+  border-right: 3px black solid;
+  border-image: linear-gradient(to bottom, #000 30%, rgba(0,0,0,0) 75%); /* to top - at 50% transparent */
+  border-image-slice: 1;
+  width: 100%;
+  padding: 5px;
+}
+
+.menu-list {
+  flex: 1;
+}
+
+ul {
+  padding: 0px 5px 300px 5px
+}
+
+li {
+  text-align: center;
+}
+
+.last-options li {
+  margin-bottom: 50px;
 }
 
 .canvas.show-menu   {
-  transform: translateX(20vh);
+  transform: translateX(40vh);
 }
 
 .MIDISounds div {
+  position: absolute;
+  top: 100vh;
   height: 10px;
   width: 10px
 }
@@ -48,13 +96,14 @@
   flex-direction: row;
   align-items: flex-start;
   padding-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .stringcontainer {
   display: flex;
   flex-direction: column-reverse;
   // padding: 20px;
-  background-image: url('./images/neckimage2.png');
+  // background-image: url('./images/neckimage2.png');
   background-size: 106%;
   background-position-x: -28px;
   background-repeat: no-repeat;
@@ -74,6 +123,19 @@
   align-self: center;
 }
 
+.modal-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: space-around;
+  flex: 1;
+}
+
 .scale-form {
   display: flex;
   flex-direction: column;
@@ -88,7 +150,11 @@
 
 
 .key {
-  background-color: salmon;
+  background-color: slategray;
+}
+
+.button.is-rounded {
+  margin: 0px 10px;
 }
 
 .intcontainer {
@@ -116,7 +182,19 @@
 // }
 
 .button-position-active, .button-position-active:focus, .button-position-active:active {
-  background-color: green;
+  background-color: #91896f;
+  color: white;
+}
+
+#inttoggle {
+  margin-left: 50px;
+  background-color: rgb(111,145,124);
+  color: white;
+}
+
+#inttoggle:active {
+  margin-left: 50px;
+  background-color: black;
   color: white;
 }
 
@@ -125,7 +203,8 @@
 }
 
 .p1a, .p2a, .p3a, .p4a, .p5a, .p6a, .p7a {
-  background-color: red;
+  background-color: rgb(61, 17, 102);
+  color: white
 }
 
 // .p2 {
@@ -137,7 +216,8 @@
 // }
 
 .p1p, .p2p, .p3p, .p4p, .p5p, .p6p, .p7p {
-  background-color: goldenrod
+  background-color: #912418;
+  color: white;
 }
 
 // .p5 {
@@ -147,8 +227,17 @@ $scale-width: 3.779527559px;
 
 .fret{
   height: 40px;
-  width: $scale-width * 5.5;
-  border: solid 1px silver;
+  width: $scale-width * 14.5;
+  border: solid 3px silver;
+  text-align: center;
+  line-height: 38px;
+  font-weight: bold;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  left: 10px
 }
 
 
@@ -250,6 +339,18 @@ select {
 
 button {
   margin: 0px 5px;
+}
+
+aside {
+  border-right: 2px black solid;
+  border-image: linear-gradient(to bottom, #000 30%, rgba(0,0,0,0) 95%); /* to top - at 50% transparent */
+  border-image-slice: 1;
+  height: 100vh;
+  padding: 20px 10px 0px 20px;
+}
+
+.svg-div {
+  text-align: center;
 }
 // svg {
 //   height: 500px;

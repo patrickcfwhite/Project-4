@@ -38,7 +38,7 @@ class SavedScaleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SavedScale
-        fields = ('id', 'scale', 'position')
+        fields = ('id', 'scale', 'position', 'key', 'key_number')
 
 
 class PopulatedSavedScaleSerializer(serializers.ModelSerializer):
@@ -46,7 +46,7 @@ class PopulatedSavedScaleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SavedScale
-        fields = ('id', 'scale', 'position')
+        fields = ('id', 'scale', 'position', 'key', 'key_number')
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -57,7 +57,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class PopulatedUserSerializer(serializers.ModelSerializer):
-    savedScales = PopulatedScaleSerializer(many=True)
+    savedScales = PopulatedSavedScaleSerializer(many=True)
 
     class Meta:
         model = User

@@ -1,13 +1,14 @@
 const noteNumbers = { 0: 'C', 1: ['C#', 'Db'], 2: 'D', 3: ['D#', 'Eb'], 4: 'E', 5: 'F', 6: ['F#', 'Gb'], 7: 'G', 8: ['G#', 'Ab'], 9: 'A', 10: ['A#', 'Bb'], 11: 'B' }
+const noteNumbersSearch = { 'C': 0, 'C#': 1, 'Db': 1, 'D': 2, 'D#': 3, 'Eb': 3, 'E': 4, 'F': 5, 'F#': 6, 'Gb': 6, 'G': 7, 'G#': 8, 'Ab': 8, 'A': 9, 'A#': 10, 'Bb': 10, 'B': 11 }
 
 const noteNumbers2 = { 'C': 0, 'Dbb': 0, 'B#': 0, 'Db': 1, 'C#': 1, 'Bx': 1, 'D': 2, 'Ebb': 2, 'Cx': 2, 'Eb': 3, 'D#': 3, 'Fbb': 3, 'E': 4, 'Dx': 4, 'Fb': 4, 'F': 5, 'Gbb': 5, 'E#': 5, 'Gb': 6, 'F#': 6, 'Ex': 6, 'G': 7, 'Abb': 7, 'Fx': 7, 'Ab': 8, 'G#': 8, 'A': 9, 'Bbb': 9, 'Gx': 9, 'Bb': 10, 'A#': 10, 'Cbb': 10, 'B': 11, 'Ax': 11, 'Cb': 11 }
 const noteNumberArray = Object.entries(noteNumbers2)
-const scaleChoices = { 'Natural Major': [2, 2, 1, 2, 2, 2, 1], 'Natural Minor': [2, 1, 2, 2, 1, 2, 2], 'Harmonic Minor': [2, 1, 2, 2, 1, 3, 1], 'Melodic Minor': [2,1,2,2,2,2,1], 'Minor Pentatonic': [3,2,2,3,2], 'Minor Blues': [3,2,1,1,3,2] }
+const scaleChoices = { 'Natural Major': [2, 2, 1, 2, 2, 2, 1], 'Natural Minor': [2, 1, 2, 2, 1, 2, 2], 'Harmonic Minor': [2, 1, 2, 2, 1, 3, 1], 'Melodic Minor': [2, 1, 2, 2, 2, 2, 1], 'Minor Pentatonic': [3, 2, 2, 3, 2], 'Minor Blues': [3, 2, 1, 1, 3, 2] }
 
 const majorScale = [2, 2, 1, 2, 2, 2, 1]
 const minorScale = [2, 1, 2, 2, 1, 2, 2]
 const harMinor = [2, 1, 2, 2, 1, 3, 1]
-const melMinor = [2,1,2,2,2,2,1]
+const melMinor = [2, 1, 2, 2, 2, 2, 1]
 
 function scaleGenerator(note, scale) {
   const starting = note
@@ -51,7 +52,7 @@ function fretCheck(note, fretNum, string, scaleNotes, scaleIntervals) {
     if (fretNum > note + 3) return false
     // if (string === 55 && keyCheck(scaleNotes, fretNum + 52) && keyCheck(scaleNotes, fretNum + 51) && fretNum > note + 1) return false
     if (string === 59 && fretNum === note - 1 && keyCheck(scaleNotes, fretNum + 53)) return false
-    
+
 
   }
   return true
@@ -74,9 +75,9 @@ function positionChecker(fretboardArray, fretArray, notesArray, string, scaleNot
       //add class 'p${position}'
       //console.log(position)
       if (!twoBefore || (twoBefore.includes(position) && scaleIntervals.some(x => x === 3)) || !twoBefore.includes(position)) {
-      //console.log(fretNum, twoBefore)
-      statePositionActive === position ? fretArray.push(active) : statePositionPreview === position ? fretArray.push(preview) : preview
-    }
+        //console.log(fretNum, twoBefore)
+        statePositionActive === position ? fretArray.push(active) : statePositionPreview === position ? fretArray.push(preview) : preview
+      }
     }
   }
   return fretArray
@@ -155,7 +156,7 @@ function intervalAndNote(scale, key) {
     intervalPure.push(interval)
     let int
     switch (interval) {
-      case 0: 
+      case 0:
         int = 'R1'
         break
       case 1:
@@ -168,9 +169,9 @@ function intervalAndNote(scale, key) {
 
         if (adjScale[i - 1] !== adjScale[0] && adjScale.length >= 7) {
           int = 'b3'
-        // } else if (scale[i] - scale[i - 1] < 3 && scale.length === 7) {
-        //   int = ''
-        } else if (adjScale[i - 1] === adjScale[0] && adjScale.length <= 7){
+          // } else if (scale[i] - scale[i - 1] < 3 && scale.length === 7) {
+          //   int = ''
+        } else if (adjScale[i - 1] === adjScale[0] && adjScale.length <= 7) {
           int = 'b3'
           counter += 1
         } else {
@@ -179,7 +180,7 @@ function intervalAndNote(scale, key) {
         }
         break
       case 4:
-        if (adjScale[i] - adjScale[i-1] - adjScale[i - 2] + adjScale[0] === 0) {
+        if (adjScale[i] - adjScale[i - 1] - adjScale[i - 2] + adjScale[0] === 0) {
           int = 'b4'
         } else {
           int = 'M3'
@@ -223,7 +224,7 @@ function intervalAndNote(scale, key) {
         int = 'M7'
         break
     }
-    let offset = ((index + i + counter) % blankNotes.length) 
+    let offset = ((index + i + counter) % blankNotes.length)
     scaleOutcome[int] = correctNoteRetriever(blankNotes[offset], adjScale[i])
     // scaleOutcome[int] = Object.keys(scaleOutcome).some(x => Number(int[2]) - Number(x[2]) === 1) ? correctNoteRetriever(blankNotes[offset+1], scale[i]) : correctNoteRetriever(blankNotes[offset], scale[i])
   }
@@ -238,6 +239,6 @@ function correctNoteRetriever(letter, num) {
   return correctPair[0][0]
 }
 
-export default { noteNumbers2, harMinor, melMinor, minorScale, majorScale, scaleChoices, noteNumberArray, scaleGenerator, homeNotesFinder, positionChecker, keyChecker, intervalAndNote }
+export default { noteNumbers2, noteNumbersSearch, harMinor, melMinor, minorScale, majorScale, scaleChoices, noteNumberArray, scaleGenerator, homeNotesFinder, positionChecker, keyChecker, intervalAndNote }
 
 // intervalAndNote([2,4,6,7,9,11,1], 'D')

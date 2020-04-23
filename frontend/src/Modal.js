@@ -26,8 +26,9 @@ const Modal = ({ closeModal, isModalOpen, toggleModalType, modalLogin }) => {
 
   function handleRegister(event) {
     event.preventDefault()
+    const e = event
     axios.post('/api/register/', credentials)
-      .then(() => this.handleLogin())
+      .then(() => handleLogin(e))
       .catch(error => console.log(error))
   }
 
@@ -39,10 +40,10 @@ const Modal = ({ closeModal, isModalOpen, toggleModalType, modalLogin }) => {
           <OutsideClickHandler onOutsideClick={(event) => {
             closeModal(event)
           }}>
-            <div className='field is-grouped'>
-            <button className='button' value={true} onClick={toggleModalType}>Login</button>
-            <button className='button'value={false} onClick={toggleModalType}>Register</button>
-            <button className='button' onClick={closeModal}>Close</button>
+            <div className='field modal-buttonsis-grouped'>
+            <button className='modal-button button' value={true} onClick={toggleModalType}>Login</button>
+            <button className='modal-button button'value={false} onClick={toggleModalType}>Register</button>
+            <button className='modal-button button' onClick={closeModal}>Close</button>
             </div>
             {modalLogin ?
               <>

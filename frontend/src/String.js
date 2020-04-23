@@ -21,8 +21,10 @@ export class String extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      scales: [],
       strings: { 'E': 40, 'A': 45, 'D': 50, 'G': 55, 'B': 59, 'e': 64 },
       stringArray: [40, 45, 50, 55, 59, 64],
+      scaleId: 1,
       key: 0,
       keyLetter: 'C',
       scaleNotes: [],
@@ -37,14 +39,28 @@ export class String extends React.Component {
       menuOpen: false,
       isModalOpen: false,
       modalLogin: true,
-      user: {},
-      scale: {}
+      importantFrets: [0,3,5,7,9,12,15,17,19,21],
+      user: {
+        savedScales: []
+      }
     }
   }
 
   openMenu(event) {
     event.preventDefault()
     this.state.menuOpen === false ? this.setState({ menuOpen: true }) : null
+  }
+
+  createFretNums() {
+    const fretNumsMap = []
+    for (let i = 0; i< 22; i++ ) {
+      if (this.state.importantFrets.some(x => x === i)) {
+        fretNumsMap.push(x)
+      } else {
+        fretNumsMap.push('x')
+      }
+    }
+    return fretNumsMap
   }
 
   closeMenu(event) {
@@ -92,23 +108,69 @@ export class String extends React.Component {
     this.envelopes = []
     this.midiSounds.setMasterVolume(0.8)
     this.midiSounds.setEchoLevel(0.02)
+    let userData = { savedScales: [] }
+    let scales
     if (auth.isLoggedIn()) {
       const user = auth.getUserId()
       console.log('user', user)
       axios.get(`/api/fretbored/users/${user}`)
         .then(res => {
           console.log(res)
-          this.setState({ user: res.data })
+          userData = res.data
+          axios.get('/api/fretbored/')
+            .then(res => {
+              scales = res.data
+              this.setState({ scales: scales, user: userData })
+            })
+        })
+    } else {
+      axios.get('/api/fretbored/')
+        .then(res => {
+          scales = res.data
+          this.setState({ scales: scales })
         })
     }
   }
 
-  saveScale() {
-    const { scale, activePosition } = this.state
-    const toSave = { scale: scale, position: Number(activePosition[1]) }
-    const user = auth.getUserId()
-    axios.post('/api/fretbored/saved_scales/', toSave)
-      .then(res => console.log(res.data))
+  handleSave(event) {
+    event.preventDefault()
+    const { scaleId, activePosition, key, keyLetter } = this.state
+    const toSave = { scale: scaleId, position: Number(activePosition[1]), key: keyLetter, key_number: key }
+    console.log(toSave)
+    const user = Number(auth.getUserId())
+    axios.post('/api/fretbored/saved_scales/', toSave, {})
+      .then(res => {
+        console.log(res.data)
+        return res.data.id
+      })
+      .then(id => {
+        console.log(this.state.user)
+        const newSaved = { ...this.state.user }
+        newSaved.savedScales.push(id)
+        console.log(newSaved)
+        const idarray = newSaved.savedScales.map(x => x.id ? x.id : x)
+        newSaved.savedScales = idarray
+        console.log('idarray', idarray)
+        console.log(newSaved)
+        axios.put(`/api/fretbored/users/${user}`, newSaved, { headers: {} })
+          .then(() => this.componentDidMount())
+      })
+  }
+
+  loadSaved(event) {
+    event.preventDefault()
+    console.log(event.target.id)
+    const noteLetter = event.target.innerHTML.split(' ')[0]
+    console.log(noteLetter)
+    const scaleIdPosition = event.target.id.split(' ').map(x => Number(x))
+    const scaleInts = event.target.value.split(',').map(x => Number(x))
+    const scaleNotes = lib.scaleGenerator(scaleIdPosition[1], scaleInts)
+    const homeNotes = lib.homeNotesFinder(scaleNotes)
+    const intvalandnote = lib.intervalAndNote(scaleNotes, noteLetter)
+    const noteLetters = intvalandnote[0].map(x => x[1])
+    console.log('intvalnote', intvalandnote)
+    this.setState({ scaleNotes: scaleNotes, homeNotes: homeNotes, activePosition: `p${scaleIdPosition[0]}`, intervalAndNote: intvalandnote[0], intervalPure: intvalandnote[1], scoreNotes: noteLetters })
+    this.render()
   }
 
   generateString(string) {
@@ -127,15 +189,18 @@ export class String extends React.Component {
 
 
   handleChange(event) {
-    const { value, data } = event.target
+    const { value, id } = event.target
+    // console.log('id?', event.target.options[event.target.selectedIndex].id)
     const update = value.length <= 2 ? lib.noteNumbers2[value] : value.split(',').map(x => Number(x))
-    console.log(update)
-    !update[3] ? this.setState({ key: update, keyLetter: event.target.value }) : this.setState({ scaleIntervals: update })
+    const scaleId = Number(event.target.options[event.target.selectedIndex].id)
+    // console.log('scaleId', scaleId)
+    !update[3] ? this.setState({ key: update, keyLetter: event.target.value }) : this.setState({ scaleIntervals: update, scaleId: scaleId })
   }
 
   handleSubmit(event) {
     event.preventDefault()
     // axios.get('')
+    console.log(event.target.data)
     const scaleNotes = lib.scaleGenerator(this.state.key, this.state.scaleIntervals)
     const homeNotes = lib.homeNotesFinder(scaleNotes)
     const intvalandnote = lib.intervalAndNote(scaleNotes, this.state.keyLetter)
@@ -194,7 +259,7 @@ export class String extends React.Component {
   }
 
   render() {
-    if (!this.state.homeNotes) return null
+    if (!this.state.user.savedScales) return null
     console.log(this.state)
     //console.log(this.state)
 
@@ -203,10 +268,10 @@ export class String extends React.Component {
         <div className={!this.state.menuOpen ? 'canvas' : 'canvas show-menu'}>
 
           <Modal closeModal={(event) => this.closeModal(event)} isModalOpen={this.state.isModalOpen} toggleModalType={event => this.toggleModalType(event)} modalLogin={this.state.modalLogin} />
-          <Sidebar closeMenu={(event) => this.closeMenu(event)} openModal={(event) => this.openModal(event)} isModalOpen={this.state.isModalOpen} menuOpen={this.state.menuOpen} />
-          <button className='button' onClick={(event) => {
-            { !this.menuOpen ? this.openMenu(event) : this.closeMenu(event) } 
-          }}>Menu</button>
+          <Sidebar closeMenu={(event) => this.closeMenu(event)}loadSaved={(event) => this.loadSaved(event)} savedScales={this.state.user.savedScales} closeMenu={(event) => this.closeMenu(event)} openModal={(event) => this.openModal(event)} isModalOpen={this.state.isModalOpen} menuOpen={this.state.menuOpen} />
+          {!this.state.menuOpen && <button className='close-button button' onClick={(event) => {
+            { !this.menuOpen ? this.openMenu(event) : this.closeMenu(event) }
+          }}>Menu</button>}
           <div className="container main-container">
             <section className="hero">
               <div className="hero-body">
@@ -218,7 +283,7 @@ export class String extends React.Component {
               </div>
             </section>
             <div className="container choice-container">
-              <Choice handleChange={(event) => this.handleChange(event)} handleSubmit={(event) => this.handleSubmit(event)} />
+              <Choice scales={this.state.scales} handleSave={(event) => this.handleSave(event)} handleChange={(event) => this.handleChange(event)} handleSubmit={(event) => this.handleSubmit(event)} />
             </div>
             <Positions handleMouseLeave={() => this.handleMouseLeave()} handlePosition={(event) => this.handlePosition(event)} activePosition={this.state.activePosition} toggleFretDisplay={(event) => this.toggleFretDisplay(event)} noteNotInterval={this.state.noteNotInterval} />
             <div id='vf'></div>
@@ -258,9 +323,10 @@ export class String extends React.Component {
               })}
             </div >
           </div>
-          <ScaleMelody scaleNotes={this.state.scaleNotes} midiSounds={this.midiSounds} />
+
           <div className="container display-container">
             <Notes noteLetters={this.state.scoreNotes} />
+            <ScaleMelody homeNotes={this.state.homeNotes} scaleNotes={this.state.scaleNotes} midiSounds={this.midiSounds} />
             {/* <ScaleDisplay intervalAndNote={this.state.intervalAndNote} intervalPure={this.state.intervalPure} /> */}
           </div>
           <MIDISounds style={'height: 2px, width: 10px'} ref={(ref) => (this.midiSounds = ref)} appElementName="root" instruments={[274]} />

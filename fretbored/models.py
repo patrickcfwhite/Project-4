@@ -30,7 +30,10 @@ class Scale(models.Model):
 class SavedScale(models.Model):
     scale = models.ForeignKey(
         'Scale', related_name='savedScales', null=True, on_delete=models.CASCADE)
-    position = models.IntegerField()
+    position = models.IntegerField(null=True)
+    key = models.CharField(max_length=2)
+    key_number = models.IntegerField()
+
 
     def __str__(self):
         return f'{self.scale} position {self.position}'

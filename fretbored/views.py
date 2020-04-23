@@ -99,8 +99,8 @@ class ScaleDetailView(APIView):
 
 class SavedScaleListView(APIView):
 
-    def post(self, request, data):
-        savedScale = SavedScaleSerializer(data=data)
+    def post(self, request):
+        savedScale = SavedScaleSerializer(data=request.data)
         if savedScale.is_valid():
             savedScale.save()
             return Response(savedScale.data, status=HTTP_201_CREATED)
@@ -134,8 +134,8 @@ class UserDetailView(APIView):
     def put(self, request, pk):
 
         user = User.objects.get(pk=pk)
-        if user.id != request.user.id:
-            return Response(status=HTTP_401_UNAUTHORIZED)
+        # if user.id != request.user.id:
+        #     return Response(status=HTTP_401_UNAUTHORIZED)
         # if request.data.scale:
         #     scale = ScaleSerializer(data=request.data.scale)
         #     if not scale.is_valid():

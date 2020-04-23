@@ -3,80 +3,89 @@ import OutsideClickHandler from 'react-outside-click-handler'
 import auth from './auth'
 
 
-const Sidebar = ({ openModal, closeMenu, isModalOpen, menuOpen }) => {
+const Sidebar = ({ openModal, closeMenu, isModalOpen, menuOpen, savedScales, loadSaved }) => {
   const isLoggedIn = auth.isLoggedIn()
-
+  if (!savedScales) return null
   return (
     !isModalOpen && menuOpen ?
       <OutsideClickHandler onOutsideClick={(event) => {
         closeMenu(event)
       }}>
+
         <aside className="menu">
+          <button className='button close-button' onClick={
+            closeMenu
+          }>Close</button>
           {!isLoggedIn ?
-            <>
+            <div>
               <p className="menu-label">
                 General
-            </p>
+              </p>
               <ul className="menu-list">
                 <li><a onClick={openModal}>Login / Register</a></li>
               </ul>
-            </>
+            </div>
             :
-            <>
+            <div>
               <p className="menu-label">
                 Saved Scales
-            </p>
-              <ul className="menu-list">
+              </p>
+              {savedScales.length === 0 ? <ul className="menu-list select is-multiple">
+                <select multiple size="10">
+                  <option className="option is-small">Your saved scales</option>
+                  <option className="option is-small">will be stored here!</option>
+                </select>
+              </ul> :
+                <ul className="menu-list select is-multiple">
+                  <select multiple size="10">
+                    {savedScales.map(scale => {
+                      return scale.position !== 0 ? (<option onClick={loadSaved} id={`${scale.position} ${scale.key_number}`} value={scale.scale.intervals} className="option is-small">{scale.key} {scale.scale.name} Position: {scale.position}</option>) :
+                        (<option onClick={loadSaved} id={`${scale.position} ${scale.key_number}`} value={scale.scale.intervals} className="option is-small">{scale.key} {scale.scale.name}</option>)
+                    })}
 
-                <li><span><a>Members</a><a className="delete"></a></span></li>
-                <li><div className="block">
-                  <span className="tag is-success">
-                    <button className="button is-small">Hello World</button>
-                    <button className="delete is-small"></button>
-                  </span>
-                </div></li>
-                <li><a>Add a member</a><a className="delete"></a></li>
-              </ul>
-              <ul className="menu-list">
+                  </select>
+                </ul>
+              }
+              <ul className="last-options menu-list">
                 <li><a onClick={() => auth.logOut()}>Log out</a></li>
                 <li><a>Delete Account</a></li>
               </ul>
-            </>
+            </div>
           }
         </aside>
       </OutsideClickHandler>
       :
       <aside className="menu">
+        <button className='button close-button' onClick={
+          closeMenu
+        }>Close</button>
         {!isLoggedIn ?
-          <>
+          <div>
             <p className="menu-label">
               General
-            </p>
+        </p>
             <ul className="menu-list">
               <li><a onClick={openModal}>Login / Register</a></li>
             </ul>
-          </>
+          </div>
           :
-          <>
+          <div>
             <p className="menu-label">
               Saved Scales
-            </p>
-            <ul className="menu-list">
+        </p>
+            <ul className="menu-list select is-multiple">
+              <select multiple size="10">
+                {savedScales.map(scale => {
+                  return <option onClick={loadSaved} id={`${scale.position} ${scale.key_number}`} value={scale.scale.intervals} className="option is-small">{scale.key} {scale.scale.name} Position: {scale.position}</option>
+                })}
 
-              <li><span><a>Members</a><a className="delete"></a></span></li>
-              <li><div className="block">
-                <span className="tag is-success">
-                  <button className="button is-small">Hello World</button>
-                  <button className="delete is-small"></button>
-                </span>
-              </div></li>
-              <li><a>Add a member</a><a className="delete"></a></li>
+              </select>
             </ul>
-            <ul className="menu-list">
-              <li><a>Log out</a></li>
+            <ul className="last-options menu-list">
+              <li><a onClick={() => auth.logOut()}>Log out</a></li>
               <li><a>Delete Account</a></li>
             </ul>
-          </>
+          </div>
         }
       </aside>
   )

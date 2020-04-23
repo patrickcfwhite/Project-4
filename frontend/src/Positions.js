@@ -15,7 +15,7 @@ const Positions = ({ handlePosition, handleMouseLeave, toggleFretDisplay, noteNo
       {positionNumeral.map(x => {
         return <button className={clicked(positions[x]) ? 'button button-position-active is-rounded' : 'button button-position is-rounded'} key={x} onMouseLeave={handleMouseLeave} onMouseEnter={handlePosition} onClick={handlePosition} value={positions[x]}>{x}</button>
       })}
-      <button className="button button-toggle is-rounded" onClick={toggleFretDisplay}>{noteNotInterval ? '123' : 'abc'}</button>
+      <button id="inttoggle" className="button button-toggle is-rounded" onClick={toggleFretDisplay}>{noteNotInterval ? 'Intervals' : 'Notes'}</button>
     </div>
   )
 }

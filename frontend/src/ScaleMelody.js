@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const ScaleMelody = ({ scaleNotes, midiSounds }) => {
+const ScaleMelody = ({ scaleNotes, midiSounds, homeNotes }) => {
 
   const [buttonState, setButtonState] = useState(0)
 
@@ -92,12 +92,11 @@ const ScaleMelody = ({ scaleNotes, midiSounds }) => {
   function stopAll() {
     midiSounds.stopPlayLoop()
   }
-
-
+  if (homeNotes.length === 0) return null
   return (
     <>
-    <button className='button' onClick={(event) => !buttonState ? startPlay(event) : stopAll()}>start scale</button>
-    <button className='button' onClick={() => stopAll()}>stop scale</button>
+    <button className='button' onClick={(event) => !buttonState ? startPlay(event) : stopAll()}>Play</button>
+    {/* <button className='button' onClick={() => stopAll()}>stop scale</button> */}
     </>
   )
 }
