@@ -1,0 +1,1181 @@
+[
+{
+  "model": "fretbored.category",
+  "pk": 1,
+  "fields": {
+    "name": "Common Scales",
+    "parent_scale": null,
+    "scales": [
+      1,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  }
+},
+{
+  "model": "fretbored.category",
+  "pk": 2,
+  "fields": {
+    "name": "Modes Of The Major Scale",
+    "parent_scale": 1,
+    "scales": [
+      2,
+      3,
+      11,
+      12,
+      13,
+      14,
+      15
+    ]
+  }
+},
+{
+  "model": "fretbored.scale",
+  "pk": 1,
+  "fields": {
+    "name": "Natural Major Scale",
+    "intervals": "[\"2\", \"2\", \"1\", \"2\", \"2\", \"2\", \"1\"]",
+    "scale_position": 1
+  }
+},
+{
+  "model": "fretbored.scale",
+  "pk": 2,
+  "fields": {
+    "name": "Ionian Mode (Major Scale)",
+    "intervals": "[\"2\", \"2\", \"1\", \"2\", \"2\", \"2\", \"1\"]",
+    "scale_position": 1
+  }
+},
+{
+  "model": "fretbored.scale",
+  "pk": 3,
+  "fields": {
+    "name": "Dorian Mode",
+    "intervals": "[\"2\", \"1\", \"2\", \"2\", \"2\", \"1\", \"2\"]",
+    "scale_position": 2
+  }
+},
+{
+  "model": "fretbored.scale",
+  "pk": 4,
+  "fields": {
+    "name": "Natural Minor Scale",
+    "intervals": "[\"2\", \"1\", \"2\", \"2\", \"1\", \"2\", \"2\"]",
+    "scale_position": 1
+  }
+},
+{
+  "model": "fretbored.scale",
+  "pk": 5,
+  "fields": {
+    "name": "Harmonic Minor Scale",
+    "intervals": "[\"2\", \"1\", \"2\", \"2\", \"1\", \"3\", \"1\"]",
+    "scale_position": 1
+  }
+},
+{
+  "model": "fretbored.scale",
+  "pk": 6,
+  "fields": {
+    "name": "Melodic Minor Scale",
+    "intervals": "[\"2\", \"1\", \"2\", \"2\", \"2\", \"2\", \"1\"]",
+    "scale_position": 1
+  }
+},
+{
+  "model": "fretbored.scale",
+  "pk": 7,
+  "fields": {
+    "name": "Minor Pentatonic Scale",
+    "intervals": "[\"3\", \"2\", \"2\", \"3\", \"2\"]",
+    "scale_position": 1
+  }
+},
+{
+  "model": "fretbored.scale",
+  "pk": 8,
+  "fields": {
+    "name": "Minor Blues Scale",
+    "intervals": "[\"3\", \"2\", \"1\", \"1\", \"3\", \"2\"]",
+    "scale_position": 1
+  }
+},
+{
+  "model": "fretbored.scale",
+  "pk": 9,
+  "fields": {
+    "name": "Major Pentatonic Scale",
+    "intervals": "[\"2\", \"2\", \"3\", \"2\", \"3\"]",
+    "scale_position": 1
+  }
+},
+{
+  "model": "fretbored.scale",
+  "pk": 11,
+  "fields": {
+    "name": "Phrygian Mode",
+    "intervals": "[\"1\", \"2\", \"2\", \"2\", \"1\", \"2\", \"2\"]",
+    "scale_position": 3
+  }
+},
+{
+  "model": "fretbored.scale",
+  "pk": 12,
+  "fields": {
+    "name": "Lydian Mode",
+    "intervals": "[\"2\", \"2\", \"2\", \"2\", \"1\", \"2\", \"2\", \"1\"]",
+    "scale_position": 4
+  }
+},
+{
+  "model": "fretbored.scale",
+  "pk": 13,
+  "fields": {
+    "name": "Mixolydian Mode",
+    "intervals": "[\"2\", \"2\", \"1\", \"2\", \"2\", \"1\", \"2\"]",
+    "scale_position": 5
+  }
+},
+{
+  "model": "fretbored.scale",
+  "pk": 14,
+  "fields": {
+    "name": "Aeolian Mode (Natural Minor)",
+    "intervals": "[\"2\", \"1\", \"2\", \"2\", \"2\", \"1\", \"2\"]",
+    "scale_position": 6
+  }
+},
+{
+  "model": "fretbored.scale",
+  "pk": 15,
+  "fields": {
+    "name": "Locrian Mode",
+    "intervals": "[\"1\", \"2\", \"2\", \"1\", \"2\", \"2\", \"2\"]",
+    "scale_position": 7
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 1,
+  "fields": {
+    "scale": 2,
+    "position": 2,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 2,
+  "fields": {
+    "scale": 3,
+    "position": 3,
+    "key": "D",
+    "key_number": 2
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 3,
+  "fields": {
+    "scale": 5,
+    "position": 3,
+    "key": "Eb",
+    "key_number": 4
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 8,
+  "fields": {
+    "scale": null,
+    "position": 3,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 9,
+  "fields": {
+    "scale": null,
+    "position": 3,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 10,
+  "fields": {
+    "scale": 5,
+    "position": 3,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 11,
+  "fields": {
+    "scale": 1,
+    "position": 2,
+    "key": "D",
+    "key_number": 2
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 12,
+  "fields": {
+    "scale": 4,
+    "position": 0,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 13,
+  "fields": {
+    "scale": 4,
+    "position": 6,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 14,
+  "fields": {
+    "scale": 4,
+    "position": 6,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 15,
+  "fields": {
+    "scale": 6,
+    "position": 2,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 16,
+  "fields": {
+    "scale": 4,
+    "position": 2,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 17,
+  "fields": {
+    "scale": 4,
+    "position": 4,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 18,
+  "fields": {
+    "scale": 4,
+    "position": 2,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 19,
+  "fields": {
+    "scale": 4,
+    "position": 2,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 20,
+  "fields": {
+    "scale": 1,
+    "position": 3,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 21,
+  "fields": {
+    "scale": 1,
+    "position": 0,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 22,
+  "fields": {
+    "scale": 4,
+    "position": 0,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 23,
+  "fields": {
+    "scale": 4,
+    "position": 3,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 24,
+  "fields": {
+    "scale": 5,
+    "position": 5,
+    "key": "D",
+    "key_number": 2
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 25,
+  "fields": {
+    "scale": 5,
+    "position": 3,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 26,
+  "fields": {
+    "scale": 1,
+    "position": 0,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 27,
+  "fields": {
+    "scale": 6,
+    "position": 4,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 28,
+  "fields": {
+    "scale": 4,
+    "position": 0,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 29,
+  "fields": {
+    "scale": 4,
+    "position": 4,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 30,
+  "fields": {
+    "scale": 4,
+    "position": 0,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 31,
+  "fields": {
+    "scale": 5,
+    "position": 4,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 32,
+  "fields": {
+    "scale": 5,
+    "position": 0,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 33,
+  "fields": {
+    "scale": 5,
+    "position": 0,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 34,
+  "fields": {
+    "scale": 5,
+    "position": 4,
+    "key": "D",
+    "key_number": 2
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 35,
+  "fields": {
+    "scale": 5,
+    "position": 2,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 36,
+  "fields": {
+    "scale": 6,
+    "position": 0,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 37,
+  "fields": {
+    "scale": 5,
+    "position": 5,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 38,
+  "fields": {
+    "scale": 4,
+    "position": 4,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 39,
+  "fields": {
+    "scale": 1,
+    "position": 6,
+    "key": "D",
+    "key_number": 2
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 40,
+  "fields": {
+    "scale": 1,
+    "position": 3,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 41,
+  "fields": {
+    "scale": 6,
+    "position": 4,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 42,
+  "fields": {
+    "scale": 4,
+    "position": 3,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 43,
+  "fields": {
+    "scale": 6,
+    "position": 5,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 44,
+  "fields": {
+    "scale": 6,
+    "position": 2,
+    "key": "D",
+    "key_number": 2
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 45,
+  "fields": {
+    "scale": 4,
+    "position": 0,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 46,
+  "fields": {
+    "scale": 4,
+    "position": 4,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 47,
+  "fields": {
+    "scale": 4,
+    "position": 3,
+    "key": "D",
+    "key_number": 2
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 48,
+  "fields": {
+    "scale": 7,
+    "position": 3,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 49,
+  "fields": {
+    "scale": 7,
+    "position": 3,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 50,
+  "fields": {
+    "scale": 4,
+    "position": 3,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 51,
+  "fields": {
+    "scale": 4,
+    "position": 1,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 52,
+  "fields": {
+    "scale": 5,
+    "position": 3,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 53,
+  "fields": {
+    "scale": 5,
+    "position": 0,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 54,
+  "fields": {
+    "scale": 6,
+    "position": 4,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 55,
+  "fields": {
+    "scale": 6,
+    "position": 0,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 56,
+  "fields": {
+    "scale": 5,
+    "position": 5,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 57,
+  "fields": {
+    "scale": 6,
+    "position": 3,
+    "key": "E",
+    "key_number": 4
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 58,
+  "fields": {
+    "scale": 6,
+    "position": 3,
+    "key": "E",
+    "key_number": 4
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 59,
+  "fields": {
+    "scale": 5,
+    "position": 0,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 60,
+  "fields": {
+    "scale": 1,
+    "position": 4,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 61,
+  "fields": {
+    "scale": 4,
+    "position": 5,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 62,
+  "fields": {
+    "scale": 4,
+    "position": 2,
+    "key": "D",
+    "key_number": 2
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 63,
+  "fields": {
+    "scale": 4,
+    "position": 3,
+    "key": "D",
+    "key_number": 2
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 64,
+  "fields": {
+    "scale": 1,
+    "position": 3,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 65,
+  "fields": {
+    "scale": 1,
+    "position": 4,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 66,
+  "fields": {
+    "scale": 5,
+    "position": 5,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 67,
+  "fields": {
+    "scale": 5,
+    "position": 5,
+    "key": "E",
+    "key_number": 4
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 68,
+  "fields": {
+    "scale": 5,
+    "position": 5,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 69,
+  "fields": {
+    "scale": 1,
+    "position": 4,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 70,
+  "fields": {
+    "scale": 5,
+    "position": 3,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 71,
+  "fields": {
+    "scale": 5,
+    "position": 4,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 72,
+  "fields": {
+    "scale": 4,
+    "position": 3,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 73,
+  "fields": {
+    "scale": 6,
+    "position": 6,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 74,
+  "fields": {
+    "scale": 5,
+    "position": 3,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 75,
+  "fields": {
+    "scale": 1,
+    "position": 0,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 76,
+  "fields": {
+    "scale": 1,
+    "position": 5,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 77,
+  "fields": {
+    "scale": 8,
+    "position": 0,
+    "key": "F",
+    "key_number": 5
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 78,
+  "fields": {
+    "scale": 6,
+    "position": 4,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 79,
+  "fields": {
+    "scale": 3,
+    "position": 6,
+    "key": "E",
+    "key_number": 4
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 80,
+  "fields": {
+    "scale": 8,
+    "position": 0,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 81,
+  "fields": {
+    "scale": 1,
+    "position": 0,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 82,
+  "fields": {
+    "scale": 2,
+    "position": 0,
+    "key": "F",
+    "key_number": 5
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 83,
+  "fields": {
+    "scale": 6,
+    "position": 0,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 84,
+  "fields": {
+    "scale": 7,
+    "position": 0,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 85,
+  "fields": {
+    "scale": 7,
+    "position": 1,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 86,
+  "fields": {
+    "scale": 7,
+    "position": 1,
+    "key": "F",
+    "key_number": 5
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 87,
+  "fields": {
+    "scale": 4,
+    "position": 5,
+    "key": "G",
+    "key_number": 7
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 88,
+  "fields": {
+    "scale": 5,
+    "position": 0,
+    "key": "E",
+    "key_number": 4
+  }
+},
+{
+  "model": "fretbored.savedscale",
+  "pk": 89,
+  "fields": {
+    "scale": 1,
+    "position": 4,
+    "key": "C",
+    "key_number": 0
+  }
+},
+{
+  "model": "fretbored.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$180000$nDh7OMiLv7o5$Z+ZZ5GXFFOmdsfcmnO2YO/MtQi+AyxNCsJbYf8LnPlg=",
+    "last_login": "2020-04-22T13:57:24Z",
+    "is_superuser": true,
+    "username": "pw",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2020-04-22T13:57:11Z",
+    "groups": [],
+    "user_permissions": [],
+    "savedScales": [
+      1
+    ]
+  }
+},
+{
+  "model": "fretbored.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$150000$GMZ9JEX2iNEZ$FtWnzCoMtPn8PR1vb8ViMVs82bEzcSC+BPLUvhmw8HE=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "patrick1",
+    "first_name": "",
+    "last_name": "",
+    "email": "patrick@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2020-04-23T01:15:57Z",
+    "groups": [],
+    "user_permissions": [],
+    "savedScales": [
+      2,
+      56,
+      60,
+      61,
+      62,
+      63,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85,
+      89
+    ]
+  }
+},
+{
+  "model": "fretbored.user",
+  "pk": 3,
+  "fields": {
+    "password": "1Qaz2wsx3edc",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "RicardoMontoya",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2020-04-23T01:54:21Z",
+    "groups": [],
+    "user_permissions": [],
+    "savedScales": [
+      1
+    ]
+  }
+},
+{
+  "model": "fretbored.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$180000$z18RW9tCzZbm$i7urUV2t34DL/pHUE7WGunwXP/Ui9Ingqzctmi8Rpiw=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "kennkenn",
+    "first_name": "",
+    "last_name": "",
+    "email": "kenn@seangpachareonsub.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2020-04-23T14:59:56.465Z",
+    "groups": [],
+    "user_permissions": [],
+    "savedScales": []
+  }
+},
+{
+  "model": "fretbored.user",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$180000$6fe3brk5YRhA$jti5ZF3JxJP7I3fSqnfXhEilfj2i0f42EWBPKnfrP38=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "test",
+    "first_name": "",
+    "last_name": "",
+    "email": "test@test.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2020-04-23T15:05:08.563Z",
+    "groups": [],
+    "user_permissions": [],
+    "savedScales": []
+  }
+},
+{
+  "model": "fretbored.user",
+  "pk": 6,
+  "fields": {
+    "password": "pbkdf2_sha256$180000$9hLLAV11RZow$fdSqhC3r5D1FidnzrjQ8p142WyhRQC8FWgLQHJ44+rU=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "ben2",
+    "first_name": "",
+    "last_name": "",
+    "email": "ben2@ben.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2020-04-23T15:07:31.739Z",
+    "groups": [],
+    "user_permissions": [],
+    "savedScales": [
+      86
+    ]
+  }
+},
+{
+  "model": "fretbored.user",
+  "pk": 7,
+  "fields": {
+    "password": "pbkdf2_sha256$180000$OajawUhPlpNL$BqX5Qpq9kqwRhlcEKN6oKXYxguNlcIjeGUwfH26OJm8=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "test2",
+    "first_name": "",
+    "last_name": "",
+    "email": "test@test2.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2020-04-23T16:20:45.923Z",
+    "groups": [],
+    "user_permissions": [],
+    "savedScales": [
+      87,
+      88
+    ]
+  }
+}
+]
