@@ -13,7 +13,7 @@
     "midi-sounds-react": "^1.2.45",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.10.1"
+    "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
     "@babel/core": "^7.7.7",
@@ -26,7 +26,7 @@
     "html-webpack-plugin": "^3.2.0",
     "install": "^0.13.0",
     "jsonwebtoken": "^8.5.1",
-    "node-sass": "^4.13.1",
+    "node-sass": "^4.14.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-html-parser": "^2.0.2",
