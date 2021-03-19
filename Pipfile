@@ -8,7 +8,7 @@ pylint = "*"
 autopep8 = "*"
 
 [packages]
-django = "==2.2.13"
+django = "==2.2.18"
 djangorestframework = "*"
 psycopg2-binary = "*"
 pyjwt = "*"
